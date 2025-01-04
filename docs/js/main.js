@@ -162,17 +162,5 @@
     that.hide();
   }
 
-  function makeCustomEvent(element) {
-    element.onclick = function () {
-      // eslint-disable-next-line no-undef
-      plausible('Download', {
-        props: { os: element.getAttribute('download-event') },
-      });
-    };
-  }
-
   document.querySelectorAll('tl8-modal').forEach((el) => makeModal(el));
-  document
-    .querySelectorAll('[download-event]')
-    .forEach((el) => makeCustomEvent(el));
 })(jQuery);

@@ -7,5 +7,4 @@ export const environment: MainFrameConfig = {
     'https://www.paypal.com/donate?hosted_button_id=V6VM4H23XLUJC',
   demoAppUrl: 'https://demo-app.tl8.io/',
   apiUrl: 'https://api.tl8.io',
-  plausibleUrl: 'https://plsbl.merckx.fr',
 };

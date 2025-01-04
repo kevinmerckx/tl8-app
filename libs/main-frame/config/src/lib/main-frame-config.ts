@@ -6,7 +6,6 @@ export interface MainFrameConfig {
   paypalDonationUrl: string;
   demoAppUrl: string;
   apiUrl: string;
-  plausibleUrl: string | null;
 }
 
 export const MAIN_FRAME_CONFIG = new InjectionToken('MAIN_FRAME_CONFIG');

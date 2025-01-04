@@ -53,7 +53,6 @@ import {
   openLanguageSelect,
   openMarkdownEditor,
 } from './actions/extra-ui.actions';
-import { PlausibleService } from './plausible.service';
 import {
   selectActiveUsers,
   selectActiveUsersOnTranslations,
@@ -139,8 +138,7 @@ export class MainFrameDataAccessService {
   constructor(
     private zone: NgZone,
     private actions$: Actions,
-    private store: Store,
-    private plausibleService: PlausibleService
+    private store: Store
   ) {
     MainFrameApi().onSetNavigationState(
       (navigationStateMessage: NavigationStateMessage) =>
@@ -160,7 +158,6 @@ export class MainFrameDataAccessService {
       this.zone.run(() => {
         switch (channel) {
           case 'state:ready':
-            this.plausibleService.sendCustomGoal('Ready', {});
             this.setTargetApplicationConfig(args[0]);
             this.startSendingUpdates();
             break;

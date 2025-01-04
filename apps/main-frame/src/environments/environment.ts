@@ -7,5 +7,4 @@ export const environment: MainFrameConfig = {
     'https://www.paypal.com/donate?hosted_button_id=V6VM4H23XLUJC',
   demoAppUrl: 'http://localhost:55731',
   apiUrl: 'http://localhost:3333',
-  plausibleUrl: null,
 };

@@ -1,9 +1,8 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { createAction } from '@ngrx/store';
 import { WorkInProgress } from '@tl8/api';
 import { DownloadDialogOutput } from '@tl8/extra-ui-interfaces';
-import { MAIN_FRAME_CONFIG, MainFrameConfig } from '@tl8/main-frame/config';
 import { MainFrameApi } from '@tl8/main-frame/webview-api';
 import * as FileSaver from 'file-saver';
 import * as JSZip from 'jszip';
@@ -18,7 +17,6 @@ import {
 } from '../actions/app.actions';
 import { openFeedbackDialog } from '../actions/user-settings.actions';
 import { MainFrameDataAccessService } from '../main-frame-data-access.service';
-import { PlausibleService } from '../plausible.service';
 
 @Injectable()
 export class DownloadEffect {
@@ -97,27 +95,9 @@ export class DownloadEffect {
     )
   );
 
-  logActions = createEffect(() =>
-    this.actions$.pipe(
-      ofType(downloadFinalTranslations),
-      withLatestFrom(this.mainFrameDataAccessService.numberOfChanges$),
-      tap(([action, numberOfTranslations]) => {
-        if (!this.config.plausibleUrl) {
-          return;
-        }
-        this.plausibleService.sendCustomGoal(action.type, {
-          numberOfTranslations,
-        });
-      }),
-      map(() => createAction('noop')())
-    )
-  );
-
   constructor(
     private actions$: Actions,
-    private mainFrameDataAccessService: MainFrameDataAccessService,
-    @Inject(MAIN_FRAME_CONFIG) private config: MainFrameConfig,
-    private plausibleService: PlausibleService
+    private mainFrameDataAccessService: MainFrameDataAccessService
   ) {}
 }
 
