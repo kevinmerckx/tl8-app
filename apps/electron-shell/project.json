@@ -1,0 +1,85 @@
+{
+  "name": "electron-shell",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/electron-shell/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/electron-shell",
+        "main": "apps/electron-shell/src/main.ts",
+        "tsConfig": "apps/electron-shell/tsconfig.app.json",
+        "assets": ["apps/electron-shell/src/assets"],
+        "additionalEntryPoints": [
+          {
+            "entryName": "preload-main",
+            "entryPath": "apps/electron-shell/src/app/main-frame/preload.ts"
+          },
+          {
+            "entryName": "preload-collaborative-main",
+            "entryPath": "apps/electron-shell/src/app/collaborative-main-frame/preload.ts"
+          },
+          {
+            "entryName": "preload-target",
+            "entryPath": "apps/electron-shell/src/app/target/preload.ts"
+          },
+          {
+            "entryName": "preload-modal",
+            "entryPath": "apps/electron-shell/src/app/extra-ui/preload.ts"
+          }
+        ],
+        "target": "node",
+        "compiler": "tsc"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/electron-shell/src/environments/environment.ts",
+              "with": "apps/electron-shell/src/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "development": {
+          "optimization": false,
+          "sourceMap": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx nx run-many --target=build --configuration=development --projects=main-frame --baseHref=./ --watch",
+          "npx nx run-many --target=build --configuration=development --projects=extra-ui --baseHref=./ --watch",
+          "npx nx run-many --target=build --configuration=development --projects=electron-shell --watch",
+          "npx nodemon --watch . --watch ./dist/apps/electron-shell --watch ./dist/apps/main-frame --watch ./dist/apps/extra-ui -e js,html,css,livereload --exec \"npx electron --inspect=9230 ./dist/apps/electron-shell/main.js\"",
+          "npx nx serve demo"
+        ],
+        "color": true,
+        "parallel": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/electron-shell/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/electron-shell"],
+      "options": {
+        "jestConfig": "apps/electron-shell/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,7 @@
+<ng-content></ng-content>
+<button class="btn btn-sm btn-link">
+  <span *ngIf="(state$ | async) === 'idle'; else done">copy</span>
+  <ng-template #done>
+    <span>copied!</span>
+  </ng-template>
+</button>

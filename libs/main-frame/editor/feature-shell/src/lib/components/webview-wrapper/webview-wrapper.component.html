@@ -1,0 +1,29 @@
+<ng-container *ngIf="webviewUrl$ | async as webviewUrl">
+  <div *ngIf="displayWebview" class="webview" tl8BrowserViewPlaceholder></div>
+</ng-container>
+
+<ng-container *ngIf="(state$ | async) === 'error'">
+  <tl8-message [messageType]="'danger'"
+    >Error loading the page.
+    <strong>{{ webviewUrl$ | async }}</strong></tl8-message
+  >
+</ng-container>
+
+<ng-container *ngIf="hasNoUrl$ | async">
+  <ng-container *ngIf="(state$ | async) === 'loaded'">
+    <div class="default-message">
+      <tl8-message [messageType]="'info'">
+        Welcome to TL8! Start by entering the URL of the application you want to
+        modify.
+      </tl8-message>
+
+      <tl8-url-input></tl8-url-input>
+      <hr />
+
+      <p>Or...</p>
+      <button type="button" class="btn btn-primary" (click)="openDemoUrl()">
+        Open the demo web page
+      </button>
+    </div>
+  </ng-container>
+</ng-container>

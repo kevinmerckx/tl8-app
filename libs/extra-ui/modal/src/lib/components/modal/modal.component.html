@@ -1,0 +1,10 @@
+<div class="frame" [ngClass]="{ 'full-height': fullHeight }">
+  <div class="title-and-close">
+    <h3 class="modal-title">{{ title }}</h3>
+    <button class="btn btn-link" (click)="close()">close</button>
+  </div>
+
+  <div class="modal-body" [ngClass]="{ 'full-height': fullHeight }">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+:host
+  display: block
+
+.tree-node-children
+  padding-left: 0.5rem
+
+.tree-node-label
+  padding: 0.1rem
+  cursor: pointer
+  transition: background 0.2s
+  word-break: break-all
+
+  &:hover, &.tree-node-label-active
+    background: #f5f5f5
+
+fa-icon.hidden
+  visibility: hidden
+
+fa-icon.warning
+  color: var(--clr-app-alert-danger-bg-color)
+
+:host
+  font-size: 80%
+
+.toggle-button
+  display: inline-flex
+  padding: 0 5px
+  justify-content: center
+  align-items: center
+
+cdk-virtual-scroll-viewport
+  height: 100%

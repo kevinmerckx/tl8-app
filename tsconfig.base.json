@@ -1,0 +1,81 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "strictNullChecks": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tl8/api": ["libs/interfaces/src/index.ts"],
+      "@tl8/collaboration/api": ["libs/collaboration/api/src/index.ts"],
+      "@tl8/collaboration/api-client": [
+        "libs/collaboration/api-client/src/index.ts"
+      ],
+      "@tl8/collaboration/client-api": [
+        "libs/collaboration/client-api/src/index.ts"
+      ],
+      "@tl8/collaboration/interfaces": [
+        "libs/collaboration/interfaces/src/index.ts"
+      ],
+      "@tl8/electron-utils": ["libs/electron-utils/src/index.ts"],
+      "@tl8/extra-ui-interfaces": ["libs/extra-ui-interfaces/src/index.ts"],
+      "@tl8/extra-ui/api": ["libs/extra-ui/api/src/index.ts"],
+      "@tl8/extra-ui/download-dialog": [
+        "libs/extra-ui/download-dialog/src/index.ts"
+      ],
+      "@tl8/extra-ui/feedback-dialog": [
+        "libs/extra-ui/feedback-dialog/src/index.ts"
+      ],
+      "@tl8/extra-ui/home-dialog": ["libs/extra-ui/home-dialog/src/index.ts"],
+      "@tl8/extra-ui/import-wip-dialog": [
+        "libs/extra-ui/import-wip-dialog/src/index.ts"
+      ],
+      "@tl8/extra-ui/language-select-dialog": [
+        "libs/extra-ui/language-select-dialog/src/index.ts"
+      ],
+      "@tl8/extra-ui/markdown-dialog": [
+        "libs/extra-ui/markdown-dialog/src/index.ts"
+      ],
+      "@tl8/extra-ui/modal": ["libs/extra-ui/modal/src/index.ts"],
+      "@tl8/feature-flags": ["libs/feature-flags/src/index.ts"],
+      "@tl8/main-frame-interfaces": ["libs/main-frame-interfaces/src/index.ts"],
+      "@tl8/main-frame/collaboration": [
+        "libs/main-frame/collaboration/src/index.ts"
+      ],
+      "@tl8/main-frame/config": ["libs/main-frame/config/src/index.ts"],
+      "@tl8/main-frame/confirmation": [
+        "libs/main-frame/confirmation/src/index.ts"
+      ],
+      "@tl8/main-frame/editor/data-access-api": [
+        "libs/main-frame/editor/data-access-api/src/index.ts"
+      ],
+      "@tl8/main-frame/editor/feature-shell": [
+        "libs/main-frame/editor/feature-shell/src/index.ts"
+      ],
+      "@tl8/main-frame/webview-api": [
+        "libs/main-frame/webview-api/src/index.ts"
+      ],
+      "@tl8/ng/file-location-strategy": [
+        "libs/ng/file-location-strategy/src/index.ts"
+      ],
+      "@tl8/private/interfaces": ["libs/private/interfaces/src/index.ts"],
+      "@tl8/private/utils": ["libs/private/utils/src/index.ts"],
+      "@tl8/ui/copy-button": ["libs/ui/copy-button/src/index.ts"],
+      "@tl8/ui/message": ["libs/ui/message/src/index.ts"],
+      "@tl8/ui/message-group": ["libs/ui/message-group/src/index.ts"],
+      "@tl8/ui/or-separation": ["libs/ui/or-separation/src/index.ts"],
+      "@tl8/ui/user-badge": ["libs/ui/user-badge/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

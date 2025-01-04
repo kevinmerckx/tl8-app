@@ -1,0 +1,6 @@
+<clr-tooltip>
+  <div class="user-avatar" clrTooltipTrigger>{{ getInitials(user.name) }}</div>
+  <clr-tooltip-content clrPosition="bottom-left" clrSize="xs" *clrIfOpen>
+    <ng-content></ng-content>
+  </clr-tooltip-content>
+</clr-tooltip>

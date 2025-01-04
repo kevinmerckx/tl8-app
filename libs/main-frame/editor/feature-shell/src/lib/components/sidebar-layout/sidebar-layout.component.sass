@@ -1,0 +1,47 @@
+:host
+  display: flex
+  flex-direction: row
+  height: 100%
+  width: 100%
+  overflow: hidden
+
+.sidebar
+  width: 400px
+  height: 100%
+  overflow: auto
+  box-shadow: 1px 0px 1px 1px rgb(0 0 0 / 12%)
+  flex: 0 0 auto
+  display: flex
+  flex-direction: column
+
+  &.collapsed
+    width: auto
+
+.content
+  flex: 1 1
+  overflow: auto
+
+.scrollable-content
+  flex: 1 1
+  overflow: auto
+
+tl8-message
+  margin: 1rem
+
+.bottom
+  flex: 0 0 auto
+  padding: 0 10px
+  display: flex
+  flex-direction: row
+  justify-content: flex-end
+  align-items: center
+  border-top: 1px solid grey
+
+.spacer
+  flex: 1 1
+
+.toggle-button
+  min-width: auto
+
+.language-dropdown-icon
+  transform: translate3d(0,-.1rem,0) rotate(180deg)

@@ -1,0 +1,35 @@
+{
+  "name": "main-frame-interfaces",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/main-frame-interfaces/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/main-frame-interfaces",
+        "tsConfig": "libs/main-frame-interfaces/tsconfig.lib.json",
+        "packageJson": "libs/main-frame-interfaces/package.json",
+        "main": "libs/main-frame-interfaces/src/index.ts",
+        "assets": ["libs/main-frame-interfaces/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/main-frame-interfaces/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/main-frame-interfaces"],
+      "options": {
+        "jestConfig": "libs/main-frame-interfaces/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

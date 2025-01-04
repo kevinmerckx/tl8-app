@@ -1,0 +1,99 @@
+{
+  "name": "extra-ui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/extra-ui/src",
+  "prefix": "tl8",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/extra-ui",
+        "index": "apps/extra-ui/src/index.html",
+        "main": "apps/extra-ui/src/main.ts",
+        "polyfills": "apps/extra-ui/src/polyfills.ts",
+        "tsConfig": "apps/extra-ui/tsconfig.app.json",
+        "inlineStyleLanguage": "sass",
+        "assets": ["apps/extra-ui/src/favicon.ico", "apps/extra-ui/src/assets"],
+        "styles": [
+          "node_modules/@clr/icons/clr-icons.min.css",
+          "node_modules/@clr/ui/clr-ui.min.css",
+          "apps/extra-ui/src/styles.sass"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "1mb",
+              "maximumError": "2mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/extra-ui/src/environments/environment.ts",
+              "with": "apps/extra-ui/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "port": 6202
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "extra-ui:build:production"
+        },
+        "development": {
+          "browserTarget": "extra-ui:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "extra-ui:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/extra-ui/src/**/*.ts",
+          "apps/extra-ui/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/extra-ui"],
+      "options": {
+        "jestConfig": "apps/extra-ui/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

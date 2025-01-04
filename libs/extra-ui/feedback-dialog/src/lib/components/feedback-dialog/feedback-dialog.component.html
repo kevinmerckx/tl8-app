@@ -1,0 +1,20 @@
+<tl8-modal [title]="'Good job! 👏👏'">
+  <h4>You are almost done!</h4>
+  <p>
+    Hand the downloaded Zip to your development team, they will know what to do.
+  </p>
+  <h4>➡️ Do you have 2 minutes to give us feedback?</h4>
+  <p>We value your feedback. It would really help us to improve the product.</p>
+  <button class="btn btn-primary" (click)="feedback()">
+    <fa-icon [icon]="icons.star"></fa-icon> Give Feedback
+  </button>
+  <h4>🙏 Consider a donation</h4>
+  <p>
+    Did you find TL8 helpful? Consider a donation to support the development of
+    the tool. For you, it's 2 minutes and some $$$. For us, it's more time to
+    spend on something that helps you.
+  </p>
+  <button class="btn btn-primary" (click)="donate()">
+    <fa-icon [icon]="icons.paypal"></fa-icon> Donate
+  </button>
+</tl8-modal>

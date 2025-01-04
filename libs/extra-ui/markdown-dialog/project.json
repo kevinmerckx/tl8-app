@@ -1,0 +1,26 @@
+{
+  "name": "extra-ui-markdown-dialog",
+  "projectType": "library",
+  "sourceRoot": "libs/extra-ui/markdown-dialog/src",
+  "prefix": "tl8",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/extra-ui/markdown-dialog"],
+      "options": {
+        "jestConfig": "libs/extra-ui/markdown-dialog/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/extra-ui/markdown-dialog/**/*.ts",
+          "libs/extra-ui/markdown-dialog/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

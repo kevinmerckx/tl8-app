@@ -1,0 +1,43 @@
+{
+  "name": "interfaces",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/interfaces/src",
+  "prefix": "tl8",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["{workspaceRoot}/dist/libs/interfaces"],
+      "options": {
+        "project": "libs/interfaces/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/interfaces/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/interfaces/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/interfaces"],
+      "options": {
+        "jestConfig": "libs/interfaces/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/interfaces/src/**/*.ts",
+          "libs/interfaces/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

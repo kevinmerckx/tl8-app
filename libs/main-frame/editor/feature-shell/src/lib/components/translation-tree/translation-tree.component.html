@@ -1,0 +1,54 @@
+<cdk-virtual-scroll-viewport
+  appendOnly
+  [itemSize]="itemSize"
+  class="example-viewport"
+>
+  <ng-container *cdkVirtualFor="let root of roots; trackBy: trackByNode">
+    <ng-container
+      [ngTemplateOutlet]="treeNode"
+      [ngTemplateOutletContext]="{ $implicit: root }"
+    ></ng-container>
+  </ng-container>
+</cdk-virtual-scroll-viewport>
+
+<ng-template #treeNode let-untypedNode>
+  <ng-container *ngIf="getTypedNode(untypedNode) as node">
+    <div class="tree-node-item" [style.height]="itemSize">
+      <div
+        class="tree-node-label"
+        [class.tree-node-label-active]="isSelectedNode(node)"
+        (click)="
+          selectNode(node);
+          expand(node);
+          $event.preventDefault();
+          $event.stopPropagation()
+        "
+      >
+        <div class="toggle-button" tabindex="0">
+          <fa-icon
+            (click)="toggleExpand(node); $event.stopPropagation()"
+            [icon]="isExpanded(node) ? icons.expanded : icons.collapsed"
+            [class.hidden]="!getChildren(node)"
+          ></fa-icon>
+        </div>
+        {{ node.chunk }}
+        <ng-container *ngIf="numberOfEmptyTranslationsUnderNode$(node) | async"
+          ><fa-icon class="warning" [icon]="icons.warning"></fa-icon
+        ></ng-container>
+      </div>
+      <ng-container *ngIf="getChildren(node) as children">
+        <div
+          class="tree-node-children"
+          *ngIf="children.length > 0 && isExpanded(node)"
+        >
+          <ng-container *ngFor="let child of children; trackBy: trackByNode">
+            <ng-container
+              [ngTemplateOutlet]="treeNode"
+              [ngTemplateOutletContext]="{ $implicit: child }"
+            ></ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>

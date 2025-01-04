@@ -1,0 +1,15 @@
+<tl8-modal [title]="'Select Language'">
+  <ul>
+    <li
+      *ngFor="let lang of data.langs"
+      tabindex="0"
+      (click)="selectLanguage(lang.lang)"
+    >
+      <fa-icon
+        [class.visible]="lang.lang === data.current"
+        [icon]="icons.selected"
+      ></fa-icon>
+      {{ lang.label }}
+    </li>
+  </ul>
+</tl8-modal>

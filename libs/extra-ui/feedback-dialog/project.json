@@ -1,0 +1,43 @@
+{
+  "name": "extra-ui-feedback-dialog",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/extra-ui/feedback-dialog/src",
+  "prefix": "tl8",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/extra-ui/feedback-dialog"],
+      "options": {
+        "project": "libs/extra-ui/feedback-dialog/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/extra-ui/feedback-dialog/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/extra-ui/feedback-dialog/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/extra-ui/feedback-dialog"],
+      "options": {
+        "jestConfig": "libs/extra-ui/feedback-dialog/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/extra-ui/feedback-dialog/**/*.ts",
+          "libs/extra-ui/feedback-dialog/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

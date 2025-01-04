@@ -1,0 +1,44 @@
+:host {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  overflow: auto;
+  background: rgba(0,0,0,0.5);
+  padding: 30px;
+}
+
+.frame {
+  padding: 20px 20px;
+  margin: auto;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 3px;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+h3 {
+  margin: 0;
+}
+
+.title-and-close {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+
+  button {
+    flex: 0 0 auto;
+  }
+}

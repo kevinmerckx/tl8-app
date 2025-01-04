@@ -1,0 +1,43 @@
+{
+  "name": "extra-ui-modal",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/extra-ui/modal/src",
+  "prefix": "tl8",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/extra-ui/modal"],
+      "options": {
+        "project": "libs/extra-ui/modal/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/extra-ui/modal/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/extra-ui/modal/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/extra-ui/modal"],
+      "options": {
+        "jestConfig": "libs/extra-ui/modal/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/extra-ui/modal/**/*.ts",
+          "libs/extra-ui/modal/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

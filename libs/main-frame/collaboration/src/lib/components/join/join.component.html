@@ -1,0 +1,14 @@
+<ng-container *ngIf="joinSequence$ | async"></ng-container>
+
+<ng-container *ngIf="connectAsUserProcedure">
+  <form (ngSubmit)="connect(connectAsUserProcedure)">
+    <input
+      type="text"
+      name="name"
+      placeholder="Display name"
+      [(ngModel)]="name"
+    />
+
+    <button>Submit</button>
+  </form>
+</ng-container>

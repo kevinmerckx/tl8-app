@@ -1,0 +1,4 @@
+<tl8-toolbar></tl8-toolbar>
+
+<tl8-wysiwyg *ngIf="(editorMode$ | async) === 'wysiwyg'"></tl8-wysiwyg>
+<tl8-raw-editor *ngIf="(editorMode$ | async) === 'raw-editor'"></tl8-raw-editor>

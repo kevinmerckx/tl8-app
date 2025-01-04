@@ -1,0 +1,25 @@
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    font-size: 15px;
+    line-height: 21px;
+    padding: 5px 5px;
+    cursor: pointer;
+
+    &:hover {
+      background: rgb(220,220,220);
+    }
+  }
+}
+
+fa-icon {
+  opacity: 0;
+
+  &.visible {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,18 @@
+<ng-container *ngIf="keyValuesFilteredBySearchQuery$ | async as keyValues">
+  <tl8-search-translations
+    [query]="(searchQuery$ | async) || ''"
+    (queryChange)="setSearchQuery($event)"
+    [numberOfResults]="keyValues.length"
+  ></tl8-search-translations>
+
+  <div
+    *ngFor="
+      let entry of keyValuesFilteredBySearchQuery$ | async;
+      trackBy: trackBy
+    "
+  >
+    <tl8-edit-translation-key [key]="entry.key" [lang]="lang$ | async">
+      {{ entry.key }}
+    </tl8-edit-translation-key>
+  </div>
+</ng-container>

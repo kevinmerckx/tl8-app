@@ -1,0 +1,48 @@
+<tl8-modal [title]="title" [fullHeight]="true" [beforeClose]="beforeClose">
+  <div class="editor">
+    <div class="editor__child editor-wrapper">
+      <div class="editor__child__title">
+        <div *ngIf="preview !== 'none'" class="spacer"></div>
+        <span>Translation</span>
+        <div *ngIf="preview === 'none'" class="spacer"></div>
+        <a
+          class="button-link"
+          *ngIf="preview === 'none'"
+          (click)="preview = 'markdown'"
+          >Open Markdown Preview</a
+        >
+      </div>
+      <textarea class="textarea" [(ngModel)]="value"></textarea>
+    </div>
+    <div class="editor__child preview-wrapper" *ngIf="preview === 'markdown'">
+      <div class="editor__child__title">
+        <fa-icon [icon]="icons.preview"></fa-icon> Preview (Markdown)
+        <div class="spacer"></div>
+        <a class="button-link" (click)="preview = 'none'"
+          ><fa-icon [icon]="icons.closePreview"></fa-icon
+        ></a>
+      </div>
+      <markdown class="preview" [data]="value"></markdown>
+    </div>
+  </div>
+
+  <ng-container *ngIf="preview === 'markdown'">
+    <tl8-message
+      >This is a preview of the translation formatted with Markdown. To
+      understand how to use Markdown, please refer to
+      <a
+        class="link"
+        (click)="
+          openExternal(
+            'https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet'
+          )
+        "
+        >this Github Cheatsheet</a
+      >.
+    </tl8-message>
+  </ng-container>
+
+  <div class="action">
+    <button class="btn btn-primary" (click)="onSave()">Save</button>
+  </div>
+</tl8-modal>

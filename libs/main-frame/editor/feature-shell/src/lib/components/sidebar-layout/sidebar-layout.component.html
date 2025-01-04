@@ -1,0 +1,69 @@
+<div class="sidebar" [class.collapsed]="isSideMenuNotVisible$ | async">
+  <div class="scrollable-content">
+    <ng-container *ngIf="isSideMenuVisible$ | async">
+      <ng-container *ngIf="(state$ | async) === 'incompatible'">
+        <tl8-message [messageType]="'warning'">
+          The current website is not compatible with TL8.
+        </tl8-message>
+      </ng-container>
+
+      <ng-container *ngIf="(state$ | async) === 'selectWebsite'">
+        <tl8-message [messageType]="'info'">
+          Navigate to a website compatible with TL8 and you will see here the
+          currently visible translations.
+        </tl8-message>
+      </ng-container>
+
+      <ng-container *ngIf="(state$ | async) === 'letsdoit'">
+        <ng-content select="[sidebar-content]"></ng-content>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="bottom">
+    <ng-container *ngIf="isSideMenuVisible$ | async">
+      <ng-container *ngIf="!withoutLanguageSelect">
+        <button
+          *ngIf="(webviewUrl$ | async) && (isCurrentWebsiteCompatible$ | async)"
+          class="btn btn-sm btn-outline-primary"
+          (click)="openLanguageSelectModal()"
+        >
+          {{ currentLanguageLabel$ | async }}
+          <fa-icon [icon]="icons.caretDropdown"></fa-icon>
+        </button>
+      </ng-container>
+
+      <button
+        *ngIf="editorMode$ | async as editorMode"
+        class="btn btn-sm"
+        (click)="toggleMode(editorMode)"
+      >
+        <ng-container *ngIf="editorMode === 'wysiwyg'"
+          >Open Full Editor</ng-container
+        >
+        <ng-container *ngIf="editorMode === 'raw-editor'"
+          >Open Live Editor</ng-container
+        >
+      </button>
+    </ng-container>
+
+    <div class="spacer"></div>
+    <button class="btn btn-sm btn-link toggle-button" (click)="toggleMenu()">
+      <ng-container *ngIf="isSideMenuVisible$ | async">
+        <fa-icon
+          [icon]="icons.caretLeft"
+          *ngIf="isSideMenuVisible$ | async"
+        ></fa-icon>
+        Reduce
+      </ng-container>
+      <fa-icon
+        [icon]="icons.caretRight"
+        *ngIf="isSideMenuNotVisible$ | async"
+      ></fa-icon>
+    </button>
+  </div>
+</div>
+
+<div class="content">
+  <ng-content></ng-content>
+</div>

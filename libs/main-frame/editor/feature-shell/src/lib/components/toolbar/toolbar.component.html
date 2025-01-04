@@ -1,0 +1,51 @@
+<button
+  *ngIf="featureFlags.collaboration"
+  class="btn btn-sm menu-button"
+  (click)="openHome()"
+>
+  <fa-icon [icon]="icons.menu"></fa-icon>
+</button>
+
+<button
+  class="btn btn-sm btn-link back-button"
+  [disabled]="canNotGoBack$ | async"
+  (click)="back()"
+>
+  <fa-icon [icon]="icons.back"></fa-icon>
+</button>
+
+<tl8-url-input></tl8-url-input>
+
+<button
+  class="btn btn-sm btn-link refresh-button"
+  [disabled]="canNotRefresh$ | async"
+  (click)="refresh()"
+>
+  <fa-icon [icon]="icons.refresh"></fa-icon>
+</button>
+
+<ng-container
+  *ngIf="(webviewUrl$ | async) && (isCurrentWebsiteCompatible$ | async)"
+>
+  <button
+    class="btn btn-clear"
+    (click)="revert()"
+    *ngIf="displayRevertButton$ | async"
+  >
+    Revert <span class="badge badge-info">{{ numberOfChanges$ | async }}</span>
+  </button>
+  <button class="btn btn-primary" (click)="download()">Download files</button>
+  <button
+    class="btn btn-primary"
+    (click)="importWIP()"
+    *ngIf="displayImportButton$ | async"
+  >
+    Import
+  </button>
+</ng-container>
+
+<ng-container *ngIf="isCollaborationMode$ | async">
+  <ng-container *ngFor="let user of activeUsers$ | async">
+    <tl8-user-badge [user]="user">{{ user.name }}</tl8-user-badge>
+  </ng-container>
+</ng-container>

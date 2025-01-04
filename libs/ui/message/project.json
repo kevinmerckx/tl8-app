@@ -1,0 +1,42 @@
+{
+  "name": "ui-message",
+  "projectType": "library",
+  "sourceRoot": "libs/ui/message/src",
+  "prefix": "tl8",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["dist/libs/ui/message"],
+      "options": {
+        "project": "libs/ui/message/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ui/message/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/ui/message/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/ui/message"],
+      "options": {
+        "jestConfig": "libs/ui/message/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/ui/message/**/*.ts",
+          "libs/ui/message/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

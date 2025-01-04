@@ -1,0 +1,35 @@
+{
+  "name": "extra-ui-interfaces",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/extra-ui-interfaces/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/extra-ui-interfaces",
+        "tsConfig": "libs/extra-ui-interfaces/tsconfig.lib.json",
+        "packageJson": "libs/extra-ui-interfaces/package.json",
+        "main": "libs/extra-ui-interfaces/src/index.ts",
+        "assets": ["libs/extra-ui-interfaces/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/extra-ui-interfaces/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/extra-ui-interfaces"],
+      "options": {
+        "jestConfig": "libs/extra-ui-interfaces/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

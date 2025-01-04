@@ -1,0 +1,28 @@
+<ng-container *ngIf="areHostsMatching$ | async">
+  <tl8-import-wip-dialog></tl8-import-wip-dialog>
+</ng-container>
+
+<ng-container *ngIf="(areHostsMatching$ | async) === false">
+  <tl8-modal [title]="'Import Work'">
+    <tl8-message
+      [messageType]="'warning'"
+      *ngIf="wipTargetHost$ | async as wipTargetHost"
+    >
+      The file you imported was created with the host "{{ wipTargetHost }}". You
+      are currently using the host "{{ currentTargetHost$ | async }}" and
+      therefore can't import this file.
+      <br />
+      <br />
+      To solve this problem, you can navigate first to
+      <strong>{{ wipTargetHost }}</strong> and import the file again.
+      <br />
+      <br />
+      <button
+        class="btn btn-secondary"
+        (click)="navigateToWIPTargetHost(wipTargetHost)"
+      >
+        Navigate to {{ wipTargetHost }}
+      </button>
+    </tl8-message>
+  </tl8-modal>
+</ng-container>

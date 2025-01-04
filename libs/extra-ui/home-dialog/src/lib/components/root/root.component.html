@@ -1,0 +1,198 @@
+<tl8-modal [title]="'🏡 Home'">
+  <ng-container *ngIf="currentUser$ | async as currentUser">
+    <div class="user">
+      <h1>Hi {{ currentUser.name }}!</h1>
+      <button (click)="clearUser()" class="btn-link btn">sign me out</button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="currentHost$ | async as currentHost">
+    <ng-container *ngIf="modalService.input.collaboration as collaboration">
+      <tl8-message [messageType]="'info'">
+        You are currently working on a collaborative project to translate
+        <strong>{{ collaboration.host }}</strong
+        >. In order to invite collaborators, copy the following ID and give it
+        to them.
+        <br />
+        <tl8-copy-button [contentToCopy]="collaboration.id">
+          <samp>{{ collaboration.id }}</samp>
+        </tl8-copy-button>
+      </tl8-message>
+    </ng-container>
+    <ng-container *ngIf="!modalService.input.collaboration">
+      <ng-container *ngIf="collaborativeProjectOfHost$ | async as project">
+        <tl8-message
+          [messageType]="'info'"
+          [actionTemplate]="joinExistingCollaborativeProjectAction"
+        >
+          The current page <strong>{{ currentHost }}</strong> you are visiting
+          is part of an existing collaborative project. Alternatively, you can
+          create a new collaborative project.
+        </tl8-message>
+
+        <ng-template #joinExistingCollaborativeProjectAction>
+          <button
+            class="btn btn-sm btn-secondary"
+            (click)="
+              joinExistingCollaborativeProject(project.id, getNameDialog)
+            "
+          >
+            Open the collaborative project
+          </button>
+          <button
+            class="btn btn-sm btn-link"
+            (click)="
+              createCollaborativeProject(currentHost, {
+                getNameDialog: getNameDialog,
+                getCollaborationDialog: getCollaborationDialog
+              })
+            "
+          >
+            Create a new collaborative project
+          </button>
+        </ng-template>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngTemplateOutlet="projectList"></ng-container>
+
+  <button
+    class="btn btn-sm"
+    (click)="
+      joinCollaborativeProject({
+        getNameDialog: getNameDialog,
+        getCollaborationDialog: getCollaborationDialog
+      })
+    "
+  >
+    Join collaborative project
+  </button>
+
+  <ng-container *ngIf="currentHost$ | async as currentHost">
+    <button class="btn btn-sm" (click)="createLocalProject(currentHost)">
+      Save current page as local project ({{ currentHost }})
+    </button>
+  </ng-container>
+</tl8-modal>
+
+<ng-template #projectList>
+  <h4>Your projects</h4>
+  <ng-container *ngIf="projects$ | async as projects">
+    <tl8-message *ngIf="projects.length === 0"
+      >You don't have any project yet. Start by navigating to a page that you
+      want to translate. You can also join a collaborative project.</tl8-message
+    >
+    <table class="table" *ngIf="projects.length > 0">
+      <thead>
+        <tr>
+          <th>URL</th>
+          <th>Collaboration ID</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of projects">
+          <td>{{ project.host }}</td>
+          <td>
+            <ng-container
+              *ngIf="
+                asCollaborativeProject(project) as collaborativeProject;
+                else na
+              "
+            >
+              <tl8-copy-button [contentToCopy]="collaborativeProject.id">
+                <samp>{{ collaborativeProject.id }}</samp>
+              </tl8-copy-button>
+            </ng-container>
+
+            <ng-template #na>
+              <button
+                class="btn btn-sm btn-outline"
+                (click)="
+                  transformLocalProjectIntoCollaborativeProject(
+                    project,
+                    getNameDialog
+                  )
+                "
+              >
+                make collaborative
+              </button>
+            </ng-template>
+          </td>
+          <td>
+            <button
+              class="btn btn-sm btn-outline"
+              (click)="openProject(project, getNameDialog)"
+            >
+              open
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</ng-template>
+
+<dialog #getNameDialog>
+  <form method="dialog" #nameForm="ngForm">
+    <h2>What is your name?</h2>
+    <p>
+      Other collaborators will use it to identify you. Must be at least 3
+      characters.
+    </p>
+    <input
+      clrInput
+      type="text"
+      name="name"
+      placeholder="Type your name"
+      [(ngModel)]="name"
+      [minlength]="3"
+      [required]="true"
+    />
+    <div class="dialog-footer">
+      <button class="btn btn-outline" type="submit" value="no" formnovalidate>
+        Cancel
+      </button>
+      <button
+        class="btn btn-primary"
+        type="submit"
+        value="yes"
+        [disabled]="nameForm.invalid"
+      >
+        Confirm
+      </button>
+    </div>
+  </form>
+</dialog>
+
+<dialog #getCollaborationDialog>
+  <form method="dialog" #collaborationIdForm="ngForm">
+    <h2>Enter the project ID</h2>
+    <p>
+      Someone who is already part of the project must have given you the project
+      ID.
+    </p>
+    <input
+      clrInput
+      type="text"
+      name="collaborationID"
+      placeholder="Type the project ID"
+      [(ngModel)]="collaborationId"
+      [required]="true"
+    />
+    <div class="dialog-footer">
+      <button class="btn btn-outline" type="submit" value="no" formnovalidate>
+        Cancel
+      </button>
+      <button
+        class="btn btn-primary"
+        type="submit"
+        value="yes"
+        [disabled]="collaborationIdForm.invalid"
+      >
+        Join
+      </button>
+    </div>
+  </form>
+</dialog>

@@ -1,0 +1,43 @@
+{
+  "name": "main-frame-confirmation",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/main-frame/confirmation/src",
+  "prefix": "tl8",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/main-frame/confirmation"],
+      "options": {
+        "project": "libs/main-frame/confirmation/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/main-frame/confirmation/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/main-frame/confirmation/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/main-frame/confirmation"],
+      "options": {
+        "jestConfig": "libs/main-frame/confirmation/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/main-frame/confirmation/**/*.ts",
+          "libs/main-frame/confirmation/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

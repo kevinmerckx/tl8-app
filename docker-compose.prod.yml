@@ -1,0 +1,36 @@
+version: '3'
+services:
+  demo:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.demo-app
+    labels:
+      - traefik.http.middlewares.demo-app-tl8-redirect-to-https.redirectscheme.scheme=https
+      - traefik.http.routers.demo-app-tl8.rule=Host(`demo-app.tl8.io`)
+      - traefik.http.routers.demo-app-tl8.entrypoints=websecure
+      - traefik.http.routers.demo-app-tl8.tls=true
+      - traefik.http.routers.demo-app-tl8.tls.certresolver=letsencrypt
+      - traefik.http.routers.demo-app-tl8-http.rule=Host(`demo-app.tl8.io`)
+      - traefik.http.routers.demo-app-tl8-http.entrypoints=web
+      - traefik.http.routers.demo-app-tl8-http.middlewares=demo-app-tl8-redirect-to-https
+      - traefik.docker.network=web
+    restart: always
+  website:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.website
+    labels:
+      - traefik.http.middlewares.website-tl8-redirect-to-https.redirectscheme.scheme=https
+      - traefik.http.routers.website-tl8.rule=Host(`tl8.io`, `www.tl8.io`)
+      - traefik.http.routers.website-tl8.entrypoints=websecure
+      - traefik.http.routers.website-tl8.tls=true
+      - traefik.http.routers.website-tl8.tls.certresolver=letsencrypt
+      - traefik.http.routers.website-tl8-http.rule=Host(`tl8.io`, `www.tl8.io`)
+      - traefik.http.routers.website-tl8-http.entrypoints=web
+      - traefik.http.routers.website-tl8-http.middlewares=website-tl8-redirect-to-https
+      - traefik.docker.network=web
+    restart: always
+networks:
+  default:
+    external:
+      name: web

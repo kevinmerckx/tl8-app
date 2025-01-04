@@ -1,0 +1,17 @@
+<tl8-modal [title]="'Download'">
+  <p>
+    Download the updated translation files in all languages. This is meant to
+    hand over your work directly to the developers.
+  </p>
+  <button class="btn" (click)="downloadFinalFiles()">
+    Download final files
+  </button>
+  <tl8-or-separation>OR</tl8-or-separation>
+  <p>
+    Or download your work in progress. This is useful to hand over your work for
+    someone else to continue or review.
+  </p>
+  <button class="btn" (click)="downloadWIPFiles()">
+    Download Work In Progress
+  </button>
+</tl8-modal>

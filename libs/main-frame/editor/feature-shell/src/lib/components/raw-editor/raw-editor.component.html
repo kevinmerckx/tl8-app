@@ -1,0 +1,89 @@
+<tl8-webview-wrapper></tl8-webview-wrapper>
+<tl8-sidebar-layout [withoutLanguageSelect]="true">
+  <ng-container sidebar-content>
+    <div class="sidebar-content">
+      <ng-container
+        *ngIf="
+          translationsFilteredByQuery$ | async as translationsFilteredByQuery
+        "
+      >
+        <tl8-search-translations
+          [query]="(searchQuery$ | async) || ''"
+          (queryChange)="setSearchQuery($event)"
+          [numberOfResults]="translationsFilteredByQuery.length"
+        ></tl8-search-translations>
+      </ng-container>
+
+      <ng-container *ngIf="searchQuery$ | async; else tree">
+        <tl8-translation-tree
+          *ngIf="flatRoots$ | async as roots"
+          [roots]="roots"
+          [modifiedTranslations]="(modifiedTranslations$ | async) || []"
+          [(selectedNode)]="selectedNode"
+        ></tl8-translation-tree>
+      </ng-container>
+      <ng-template #tree>
+        <tl8-translation-tree
+          *ngIf="roots$ | async as roots"
+          [roots]="roots"
+          [modifiedTranslations]="(modifiedTranslations$ | async) || []"
+          [(selectedNode)]="selectedNode"
+        ></tl8-translation-tree>
+      </ng-template>
+    </div>
+  </ng-container>
+
+  <ng-container>
+    <cdk-virtual-scroll-viewport
+      appendOnly
+      [itemSize]="51 * ((langs$ | async) || []).length + 45 + 2"
+    >
+      <div class="webview-wrapper">
+        <ng-container
+          *ngIf="modifiedTranslations$ | async as modifiedTranslations"
+        >
+          <ng-container
+            *ngIf="
+              getTranslationsInsideNode(
+                modifiedTranslations,
+                selectedNode
+              ) as translations
+            "
+          >
+            <tl8-node-summary [selectedNode]="selectedNode"></tl8-node-summary>
+
+            <ng-container
+              *cdkVirtualFor="
+                let translation of translations;
+                trackBy: trackByTranslation
+              "
+            >
+              <div class="translation-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th colspan="2">{{ translation }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let lang of langs$ | async">
+                      <tr>
+                        <th>{{ lang.label }}</th>
+                        <td>
+                          <tl8-edit-translation-key
+                            [key]="translation"
+                            [lang]="lang.lang"
+                          ></tl8-edit-translation-key>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </ng-container>
+</tl8-sidebar-layout>

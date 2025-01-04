@@ -1,0 +1,36 @@
+<div class="input-container">
+  <fa-icon [icon]="icons.search"></fa-icon>
+
+  <clr-input-container class="full-width-input-container">
+    <input
+      clrInput
+      [ngModel]="query"
+      (ngModelChange)="query = $event; queryChange.emit($event)"
+      placeholder="Look for a translation"
+    />
+  </clr-input-container>
+</div>
+
+<ng-container *ngIf="numberOfResults === 0">
+  <tl8-message [messageType]="'info'"
+    >No translation found.
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      (click)="queryChange.emit('')"
+    >
+      Clear the search
+    </button></tl8-message
+  >
+</ng-container>
+
+<ng-container *ngIf="numberOfResults > 0 && query">
+  <tl8-message [messageType]="'info'"
+    >You are currently filtering the translations.
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      (click)="queryChange.emit('')"
+    >
+      Clear the search
+    </button></tl8-message
+  >
+</ng-container>

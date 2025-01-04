@@ -1,0 +1,35 @@
+{
+  "name": "electron-utils",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/electron-utils/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/electron-utils",
+        "tsConfig": "libs/electron-utils/tsconfig.lib.json",
+        "packageJson": "libs/electron-utils/package.json",
+        "main": "libs/electron-utils/src/index.ts",
+        "assets": ["libs/electron-utils/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/electron-utils/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/electron-utils"],
+      "options": {
+        "jestConfig": "libs/electron-utils/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

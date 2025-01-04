@@ -1,0 +1,11 @@
+<tl8-message
+  [messageType]="'danger'"
+  *ngIf="numberOfEmptyTranslations$ | async as numberOfEmptyTranslations"
+>
+  <ng-container *ngIf="numberOfEmptyTranslations > 1"
+    >There are {{ numberOfEmptyTranslations }} empty translations.</ng-container
+  >
+  <ng-container *ngIf="numberOfEmptyTranslations === 1"
+    >There is {{ numberOfEmptyTranslations }} empty translation.</ng-container
+  >
+</tl8-message>

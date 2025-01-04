@@ -1,0 +1,37 @@
+.conflict-wrapper
+  margin-top: 0.5rem
+
+.conflict-choices-wrapper
+  display: flex
+  flex-direction: row
+  gap: 0.3rem
+
+  &>*
+    flex: 0 0 auto
+    width: 50%
+
+.choice
+  border: grey 1px solid
+  padding: 0.3rem
+  border-radius: var(--clr-alert-borderradius)
+  cursor: pointer
+  transition: box-shadow 0.2s
+
+  &:hover
+    box-shadow: 0px 2px 1px 2px #d1d1d1
+
+  &.selected-choice
+    border-color: var(--clr-alert-success-border-color)
+    box-shadow: 0px 0px 2px 2px var(--clr-alert-success-border-color), 0px 2px 1px 2px #d1d1d1
+
+  .value
+    padding: 0.1rem
+    background: #f6f6f6
+
+.action-buttons-wrapper
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+
+clr-accordion
+  margin-top: 1rem

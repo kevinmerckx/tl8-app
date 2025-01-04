@@ -1,0 +1,43 @@
+{
+  "name": "main-frame-webview-api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/main-frame/webview-api/src",
+  "prefix": "tl8",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/main-frame/webview-api"],
+      "options": {
+        "project": "libs/main-frame/webview-api/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/main-frame/webview-api/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/main-frame/webview-api/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/main-frame/webview-api"],
+      "options": {
+        "jestConfig": "libs/main-frame/webview-api/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/main-frame/webview-api/**/*.ts",
+          "libs/main-frame/webview-api/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,47 @@
+{
+  "name": "main-frame-editor-data-access-api",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/main-frame/editor/data-access-api/src",
+  "prefix": "tl8",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": [
+        "{workspaceRoot}/dist/libs/main-frame/editor/data-access-api"
+      ],
+      "options": {
+        "project": "libs/main-frame/editor/data-access-api/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/main-frame/editor/data-access-api/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/main-frame/editor/data-access-api/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/libs/main-frame/editor/data-access-api"
+      ],
+      "options": {
+        "jestConfig": "libs/main-frame/editor/data-access-api/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/main-frame/editor/data-access-api/**/*.ts",
+          "libs/main-frame/editor/data-access-api/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

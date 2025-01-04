@@ -1,0 +1,45 @@
+{
+  "name": "main-frame-editor-feature-shell",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/main-frame/editor/feature-shell/src",
+  "prefix": "tl8",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/libs/main-frame/editor/feature-shell"],
+      "options": {
+        "project": "libs/main-frame/editor/feature-shell/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/main-frame/editor/feature-shell/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/main-frame/editor/feature-shell/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/libs/main-frame/editor/feature-shell"
+      ],
+      "options": {
+        "jestConfig": "libs/main-frame/editor/feature-shell/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/main-frame/editor/feature-shell/**/*.ts",
+          "libs/main-frame/editor/feature-shell/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

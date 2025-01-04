@@ -1,0 +1,54 @@
+<div class="edit-translation" *ngIf="actions$ | async as actions">
+  <clr-input-container class="full-width-input-container">
+    <label><ng-content></ng-content></label>
+    <input
+      clrInput
+      placeholder="Put a translation here"
+      (focus)="actions.onFocus()"
+      (blur)="actions.onBlur()"
+      [ngModel]="value$ | async"
+      (ngModelChange)="actions.onTranslationChange($event)"
+      [disabled]="!!(isDisabled$ | async)"
+      #input
+    />
+
+    <clr-control-helper
+      *ngIf="otherAuthorEditing$ | async as other; else standardStatus"
+    >
+      {{ other.name }} is working on this translation.
+    </clr-control-helper>
+
+    <ng-template #standardStatus>
+      <clr-control-helper [class]="stateOfEntry$ | async">
+        <ng-container *ngIf="(stateOfEntry$ | async) === 'empty'">
+          <fa-icon [icon]="icons.error"></fa-icon> This translation is empty!
+        </ng-container>
+
+        <ng-container *ngIf="(stateOfEntry$ | async) === 'modified'">
+          <ng-container
+            *ngIf="(windowMode$ | async) === 'collaboration'; else revert"
+          >
+            <ng-container *ngIf="lastAuthor$ | async as author">
+              Last modified by {{ author.name }}
+            </ng-container>
+          </ng-container>
+          <ng-template #revert>
+            <a (click)="actions.revert()" class="revert-button">
+              <fa-icon [icon]="icons.revert"></fa-icon> Revert changes</a
+            >
+          </ng-template>
+        </ng-container>
+
+        <ng-container *ngIf="(stateOfEntry$ | async) === 'unchanged'"
+          >Unchanged</ng-container
+        >
+      </clr-control-helper>
+    </ng-template>
+  </clr-input-container>
+
+  <button class="markdown-button" (click)="actions.openMarkdownEditorModal()">
+    <fa-icon [icon]="icons.externalLink"></fa-icon>
+  </button>
+</div>
+
+<ng-container *ngIf="focusOnTranslationEffect$ | async"></ng-container>

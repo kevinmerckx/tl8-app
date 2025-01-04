@@ -1,0 +1,215 @@
+<ng-container *ngIf="vm.modalInputData$ | async as modalInputData">
+  <ng-container *ngIf="vm.choices$ | async as choices">
+    <ng-container *ngIf="vm.imports$ | async as imports">
+      <ng-container
+        *ngIf="vm.targetApplicationConfig$ | async as targetApplicationConfig"
+      >
+        <tl8-modal [title]="'Import'">
+          <tl8-message-group [groupType]="'success'">
+            <ng-container *ngFor="let lang of vm.langs$ | async">
+              <ng-container
+                *ngIf="
+                  vm.getSuccessfulImports(imports, lang) as successfulImports
+                "
+              >
+                <tl8-message-group-item *ngIf="successfulImports.length > 1">
+                  {{ successfulImports.length }} translations ready to be
+                  imported for the language "{{
+                    vm.getLanguageLabel(targetApplicationConfig, lang)
+                  }}
+                  ({{ lang }})".
+                </tl8-message-group-item>
+                <tl8-message-group-item *ngIf="successfulImports.length === 1">
+                  1 translation ready to be imported for the language "{{
+                    vm.getLanguageLabel(targetApplicationConfig, lang)
+                  }}
+                  ({{ lang }})".
+                </tl8-message-group-item>
+              </ng-container>
+            </ng-container>
+
+            <tl8-message-group-item
+              *ngIf="conflictForm.valid && (vm.hasConflict$ | async)"
+            >
+              All conflicts have been resolved. You can now proceed and finalize
+              the import.
+              <br />
+              <button
+                class="btn btn-sm btn-secondary"
+                (click)="
+                  vm.import(conflictForm, imports, modalInputData, choices)
+                "
+              >
+                Import
+              </button>
+            </tl8-message-group-item>
+          </tl8-message-group>
+
+          <tl8-message-group [groupType]="'danger'">
+            <tl8-message-group-item
+              *ngIf="conflictForm.invalid && (vm.hasConflict$ | async)"
+            >
+              We detected conflicts. In order to proceed with the import, you
+              have to solve them. For each conflict below, you must select the
+              version that you want to keep.
+            </tl8-message-group-item>
+          </tl8-message-group>
+
+          <form #conflictForm="ngForm">
+            <ng-container
+              *ngFor="
+                let lang of vm.conflictedLangs$ | async;
+                trackBy: trackByLang
+              "
+              [ngModelGroup]="lang"
+            >
+              <ng-container
+                *ngIf="vm.getConflictImports(imports, lang) as conflictImports"
+              >
+                <ng-container
+                  *ngFor="
+                    let import of conflictImports;
+                    trackBy: trackByConflictImport
+                  "
+                >
+                  <input
+                    type="hidden"
+                    [ngModel]="vm.getChoice(choices, lang, import.key)"
+                    [name]="import.key"
+                    required
+                  />
+                </ng-container>
+              </ng-container>
+            </ng-container>
+
+            <clr-accordion>
+              <clr-accordion-panel
+                *ngFor="
+                  let lang of vm.conflictedLangs$ | async;
+                  trackBy: trackByLang
+                "
+                [clrAccordionPanelOpen]="false"
+              >
+                <clr-accordion-title>
+                  {{ vm.getLanguageLabel(targetApplicationConfig, lang) }} ({{
+                    lang
+                  }}) -
+                  <ng-container *ngIf="conflictForm.controls[lang]?.invalid">
+                    <ng-container
+                      *ngIf="
+                        vm.getConflictImports(imports, lang) as conflictImports
+                      "
+                    >
+                      <ng-container *ngIf="conflictImports.length === 1">
+                        <strong>1</strong> conflict pending.
+                      </ng-container>
+                      <ng-container *ngIf="conflictImports.length > 1">
+                        <strong>{{ conflictImports.length }}</strong> conflicts
+                        pending.
+                      </ng-container>
+                    </ng-container>
+                    <fa-icon [icon]="icons.danger"></fa-icon>
+                  </ng-container>
+                  <ng-container *ngIf="conflictForm.controls[lang]?.valid">
+                    All conflicts have been resolved!
+                    <fa-icon [icon]="icons.check"></fa-icon>
+                  </ng-container>
+                </clr-accordion-title>
+                <clr-accordion-content>
+                  <ng-container
+                    *ngIf="
+                      vm.getConflictImports(imports, lang) as conflictImports
+                    "
+                  >
+                    <ng-container
+                      *ngFor="
+                        let import of conflictImports;
+                        trackBy: trackByConflictImport
+                      "
+                    >
+                      <div class="conflict-wrapper">
+                        <div class="conflict-key">{{ import.key }}</div>
+                        <div class="conflict-choices-wrapper">
+                          <div
+                            class="choice"
+                            [class.selected-choice]="
+                              vm.getChoice(choices, lang, import.key) ===
+                              'local'
+                            "
+                            (click)="
+                              vm.setChoice(choices, lang, import.key, 'local')
+                            "
+                          >
+                            <clr-radio-wrapper>
+                              <input
+                                type="radio"
+                                clrRadio
+                                [checked]="
+                                  vm.getChoice(choices, lang, import.key) ===
+                                  'local'
+                                "
+                                (input)="
+                                  vm.setChoice(
+                                    choices,
+                                    lang,
+                                    import.key,
+                                    'local'
+                                  )
+                                "
+                              />
+                              <label>Yours</label>
+                            </clr-radio-wrapper>
+                            <div class="value">{{ import.localValue }}</div>
+                          </div>
+                          <div
+                            class="choice"
+                            [class.selected-choice]="
+                              vm.getChoice(choices, lang, import.key) === 'wip'
+                            "
+                            (click)="
+                              vm.setChoice(choices, lang, import.key, 'wip')
+                            "
+                          >
+                            <clr-radio-wrapper>
+                              <input
+                                type="radio"
+                                clrRadio
+                                [checked]="
+                                  vm.getChoice(choices, lang, import.key) ===
+                                  'wip'
+                                "
+                                (input)="
+                                  vm.setChoice(choices, lang, import.key, 'wip')
+                                "
+                              />
+                              <label>Incoming</label>
+                            </clr-radio-wrapper>
+                            <div class="value">{{ import.importedValue }}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </clr-accordion-content>
+              </clr-accordion-panel>
+            </clr-accordion>
+            <div class="action-buttons-wrapper">
+              <button class="btn btn-outline-secondary" (click)="vm.cancel()">
+                Cancel
+              </button>
+              <button
+                [disabled]="conflictForm.invalid"
+                class="btn btn-primary"
+                (click)="
+                  vm.import(conflictForm, imports, modalInputData, choices)
+                "
+              >
+                Import
+              </button>
+            </div>
+          </form>
+        </tl8-modal>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>

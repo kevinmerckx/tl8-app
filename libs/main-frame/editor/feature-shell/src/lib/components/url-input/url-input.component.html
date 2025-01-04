@@ -1,0 +1,6 @@
+<input
+  type="text"
+  [ngModel]="webviewUrl$ | async"
+  (keydown.enter)="navigateTo($event)"
+  placeholder="e.g. google.com"
+/>
