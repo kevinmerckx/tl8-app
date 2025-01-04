@@ -1,0 +1,45 @@
+tl8-modal {
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  transform: translateY(-100%);
+  transition: opacity 0.2s, transform 0.2s;
+  padding: 5rem 10rem;
+  overflow: auto;
+  z-index: 99999;
+  text-align: left;
+
+  @include breakpoint('<=large') {
+    padding: 0;
+  }
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tl8-modal__content {
+    background: _palette(bg);
+    padding: 4rem;
+    position: relative;
+  }
+
+  .modal__close {
+    top: 0.2rem;
+    right: 0.2rem;
+    position: absolute;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    border-bottom: 2px solid _palette(border2);
+  }
+}
+
+body.with-modal {
+  overflow: hidden;
+}
